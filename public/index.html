@@ -29,6 +29,23 @@
               'glow-md': '0 0 15px rgba(0, 207, 255, 0.7)',
               'glow-lg': '0 0 20px rgba(0, 207, 255, 0.7)',
             }
+
+            boxShadow: {
+      glow: '0 0 15px rgba(0, 207, 255, 0.6)',
+    },
+    textShadow: {
+      glow: '0 0 5px rgba(0, 207, 255, 0.8)',
+    },
+    animation: {
+      galaxy: 'stars 100s linear infinite',
+    },
+    keyframes: {
+      stars: {
+        '0%': { backgroundPosition: '0 0' },
+        '100%': { backgroundPosition: '1000px 1000px' },
+      },
+    },
+
           }
         }
       }

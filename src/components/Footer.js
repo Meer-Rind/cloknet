@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiTwitter, FiFacebook, FiInstagram, FiLinkedin, FiGithub } from 'react-icons/fi';
+import {
+  FiTwitter,
+  FiFacebook,
+  FiInstagram,
+  FiLinkedin,
+  FiGithub,
+} from 'react-icons/fi';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -16,85 +22,92 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-deepnavy border-t border-gray-800 py-8">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-[#011E3C]/60 backdrop-blur-md text-white border-t border-[#1a1a2e] mt-12">
+      <div className="container mx-auto px-4 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+          {/* Brand Info */}
           <div className="md:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15l8-8m0 0l-8-8m8 8H4" />
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-10 h-10 rounded-full bg-[#00CFFF] flex items-center justify-center shadow-[0_0_10px_#00E5FF]">
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 15l8-8m0 0l-8-8m8 8H4"
+                  />
                 </svg>
               </div>
-              <span className="text-white font-bold text-lg">Cloknet VPN</span>
+              <span className="text-xl font-bold">Cloknet VPN</span>
             </div>
-            <p className="text-lighttext text-sm">
-              Secure your internet connection with our high-speed VPN service. Protect your privacy and access content from anywhere.
+            <p className="text-sm text-lighttext leading-relaxed max-w-md">
+              Cloknet VPN delivers secure, high-speed, and encrypted internet access
+              globally. Bypass restrictions, protect your data, and browse without
+              limits — all in one powerful app.
             </p>
-            <div className="flex space-x-4 mt-4">
-              <a href="#" className="text-lighttext hover:text-glow transition">
-                <FiTwitter size={20} />
-              </a>
-              <a href="#" className="text-lighttext hover:text-glow transition">
-                <FiFacebook size={20} />
-              </a>
-              <a href="#" className="text-lighttext hover:text-glow transition">
-                <FiInstagram size={20} />
-              </a>
-              <a href="#" className="text-lighttext hover:text-glow transition">
-                <FiLinkedin size={20} />
-              </a>
-              <a href="#" className="text-lighttext hover:text-glow transition">
-                <FiGithub size={20} />
-              </a>
+            <div className="flex space-x-4 mt-5">
+              <SocialIcon icon={<FiTwitter />} />
+              <SocialIcon icon={<FiFacebook />} />
+              <SocialIcon icon={<FiInstagram />} />
+              <SocialIcon icon={<FiLinkedin />} />
+              <SocialIcon icon={<FiGithub />} />
             </div>
           </div>
 
+          {/* Quick Links */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><Link to="/features" className="text-lighttext hover:text-white text-sm transition">Features</Link></li>
-              <li><Link to="/servers" className="text-lighttext hover:text-white text-sm transition">Servers</Link></li>
-              <li><Link to="/pricing" className="text-lighttext hover:text-white text-sm transition">Pricing</Link></li>
-              <li><Link to="/blog" className="text-lighttext hover:text-white text-sm transition">Blog</Link></li>
-              <li><Link to="/contact" className="text-lighttext hover:text-white text-sm transition">Contact</Link></li>
+            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <ul className="space-y-2 text-sm">
+              <FooterLink to="/features">Features</FooterLink>
+              <FooterLink to="/servers">Servers</FooterLink>
+              <FooterLink to="/pricing">Pricing</FooterLink>
+              <FooterLink to="/blog">Blog</FooterLink>
+              <FooterLink to="/contact">Contact</FooterLink>
             </ul>
           </div>
 
+          {/* Legal */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Legal</h3>
-            <ul className="space-y-2">
-              <li><Link to="/privacy-policy" className="text-lighttext hover:text-white text-sm transition">Privacy Policy</Link></li>
-              <li><Link to="/terms" className="text-lighttext hover:text-white text-sm transition">Terms of Service</Link></li>
+            <h3 className="text-lg font-semibold mb-4">Legal</h3>
+            <ul className="space-y-2 text-sm">
+              <FooterLink to="/privacy-policy">Privacy Policy</FooterLink>
+              <FooterLink to="/terms">Terms of Service</FooterLink>
             </ul>
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-gray-800">
-          <div className="md:flex md:items-center md:justify-between">
-            <p className="text-lighttext text-sm">
+        {/* Bottom bar */}
+        <div className="mt-10 pt-8 border-t border-[#1f2937]">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+            <p className="text-sm text-lighttext">
               &copy; {new Date().getFullYear()} Cloknet VPN. All rights reserved.
             </p>
-            
-            <form onSubmit={handleSubscribe} className="mt-4 md:mt-0">
-              <div className="flex">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your email"
-                  className="px-4 py-2 rounded-l-md bg-gray-800 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary w-full md:w-64"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="bg-primary hover:bg-glow text-white px-4 py-2 rounded-r-md text-sm font-medium transition"
-                >
-                  Subscribe
-                </button>
-              </div>
+
+            {/* Subscribe Form */}
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2 sm:gap-0 sm:items-center">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="px-4 py-2 rounded-l-md bg-gray-900 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#00CFFF] w-full sm:w-64"
+                required
+              />
+              <button
+                type="submit"
+                className="bg-[#00CFFF] hover:bg-[#00E5FF] text-sm px-4 py-2 rounded-r-md font-medium transition"
+              >
+                Subscribe
+              </button>
               {subscribed && (
-                <p className="mt-2 text-sm text-green-400">Thank you for subscribing!</p>
+                <span className="mt-2 sm:mt-0 sm:ml-3 text-sm text-green-400">
+                  ✅ Subscribed successfully!
+                </span>
               )}
             </form>
           </div>
@@ -103,5 +116,22 @@ const Footer = () => {
     </footer>
   );
 };
+
+const FooterLink = ({ to, children }) => (
+  <li>
+    <Link to={to} className="text-lighttext hover:text-[#00E5FF] transition">
+      {children}
+    </Link>
+  </li>
+);
+
+const SocialIcon = ({ icon }) => (
+  <a
+    href="#"
+    className="text-lighttext hover:text-[#00E5FF] hover:scale-110 transition-transform duration-200"
+  >
+    {icon}
+  </a>
+);
 
 export default Footer;

@@ -2,123 +2,119 @@ import { useState } from 'react';
 import { FiUser, FiMail, FiMessageSquare } from 'react-icons/fi';
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitSuccess(true);
       setFormData({ name: '', email: '', message: '' });
-      
-      // Reset success message after 5 seconds
       setTimeout(() => setSubmitSuccess(false), 5000);
     }, 1500);
   };
 
   return (
-    <div className="bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-lg p-6 border border-gray-700">
-      <h2 className="text-2xl font-semibold text-white mb-6">Send us a message</h2>
-      
+    <div className="bg-gradient-to-br from-slate-900/40 via-gray-800/40 to-black/60 backdrop-blur-xl rounded-3xl p-10 border border-white/10 shadow-[0_0_25px_#00CFFF33] transition-all duration-300">
+      <h2 className="text-4xl font-extrabold text-white mb-3 tracking-tight">Connect with <span className="text-primary">Cloknet</span></h2>
+      <p className="text-lighttext mb-6 text-sm">Have a question, feedback, or partnership idea? Reach out — your next step to online freedom starts here.</p>
+
       {submitSuccess && (
-        <div className="bg-green-900 text-green-300 p-4 rounded-md mb-6">
-          Thank you for your message! We'll get back to you soon.
+        <div className="bg-green-800/30 text-green-300 p-4 rounded-lg mb-6 text-sm border border-green-500/20 shadow-md animate-fade-in">
+          ✅ Thank you for your message! We’ll reach out to you soon.
         </div>
       )}
-      
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-lighttext text-sm mb-2">Name</label>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Name */}
+        <div>
+          <label htmlFor="name" className="block text-sm font-medium text-lighttext mb-1">Your Name</label>
           <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FiUser className="text-gray-500" />
-            </div>
+            <FiUser className="absolute left-3 top-3 text-gray-500" />
             <input
               type="text"
               id="name"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="bg-gray-900 border border-gray-700 text-white text-sm rounded-lg focus:ring-primary focus:border-primary block w-full pl-10 p-2.5"
-              placeholder="Your name"
+              className="pl-10 pr-4 py-2.5 w-full text-sm rounded-lg bg-white/5 text-white border border-white/10 focus:ring-2 focus:ring-primary focus:outline-none placeholder:text-gray-400 backdrop-blur-md"
+              placeholder="John Doe"
               required
             />
           </div>
         </div>
-        
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-lighttext text-sm mb-2">Email</label>
+
+        {/* Email */}
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-lighttext mb-1">Email Address</label>
           <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FiMail className="text-gray-500" />
-            </div>
+            <FiMail className="absolute left-3 top-3 text-gray-500" />
             <input
               type="email"
               id="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="bg-gray-900 border border-gray-700 text-white text-sm rounded-lg focus:ring-primary focus:border-primary block w-full pl-10 p-2.5"
-              placeholder="your@email.com"
+              className="pl-10 pr-4 py-2.5 w-full text-sm rounded-lg bg-white/5 text-white border border-white/10 focus:ring-2 focus:ring-primary focus:outline-none placeholder:text-gray-400 backdrop-blur-md"
+              placeholder="you@securemail.com"
               required
             />
           </div>
         </div>
-        
-        <div className="mb-6">
-          <label htmlFor="message" className="block text-lighttext text-sm mb-2">Message</label>
+
+        {/* Message */}
+        <div>
+          <label htmlFor="message" className="block text-sm font-medium text-lighttext mb-1">Message</label>
           <div className="relative">
-            <div className="absolute top-3 left-3">
-              <FiMessageSquare className="text-gray-500" />
-            </div>
+            <FiMessageSquare className="absolute left-3 top-3 text-gray-500" />
             <textarea
               id="message"
               name="message"
               value={formData.message}
               onChange={handleChange}
               rows="5"
-              className="bg-gray-900 border border-gray-700 text-white text-sm rounded-lg focus:ring-primary focus:border-primary block w-full pl-10 p-2.5"
-              placeholder="Your message..."
+              className="pl-10 pr-4 py-2.5 w-full text-sm rounded-lg bg-white/5 text-white border border-white/10 focus:ring-2 focus:ring-primary focus:outline-none placeholder:text-gray-400 resize-none backdrop-blur-md"
+              placeholder="Tell us how we can help you stay private and free online..."
               required
             ></textarea>
           </div>
         </div>
-        
+
+        {/* Button */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`w-full py-3 rounded-md font-medium ${isSubmitting ? 'bg-gray-600' : 'bg-primary hover:bg-glow'} text-white hover-glow transition flex items-center justify-center`}
+          className={`w-full py-3 rounded-lg font-semibold text-white transition-all duration-300 shadow-md ${
+            isSubmitting
+              ? 'bg-gray-600 cursor-not-allowed'
+              : 'bg-primary hover:bg-glow hover:text-black'
+          }`}
         >
           {isSubmitting ? (
-            <>
-              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            <div className="flex items-center justify-center gap-2">
+              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.3 0 0 5.3 0 12h4z" />
               </svg>
               Sending...
-            </>
+            </div>
           ) : (
-            'Send Message'
+            'Send Secure Message'
           )}
         </button>
       </form>
+
+      <div className="mt-6 text-xs text-lighttext text-center opacity-75">
+        🔐 We respect your privacy. Every message is encrypted and confidential.
+      </div>
     </div>
   );
 };

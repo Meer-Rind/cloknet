@@ -1,45 +1,46 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { FiMenu, FiX, FiShield, FiServer, FiDollarSign, FiBook, FiMail } from 'react-icons/fi';
+import {
+  FiMenu,
+  FiX,
+  FiShield,
+  FiServer,
+  FiDollarSign,
+  FiBook,
+  FiMail,
+} from 'react-icons/fi';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="bg-deepnavy shadow-lg sticky top-0 z-50">
+    <header className="sticky top-0 z-50 backdrop-blur-lg bg-[#011E3C]/60 shadow-md transition-all duration-300">
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
+          {/* Brand */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center hover-glow">
+            <div className="w-10 h-10 rounded-full bg-[#00CFFF] hover:shadow-[0_0_10px_#00E5FF] transition duration-300 flex items-center justify-center">
               <FiShield className="text-white text-xl" />
             </div>
-            <span className="text-white font-bold text-xl">Cloknet VPN</span>
+            <span className="text-white font-semibold text-xl tracking-wide">
+              Cloknet VPN
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
-            <Link to="/features" className="text-lighttext hover:text-white transition flex items-center">
-              <FiServer className="mr-1" /> Features
-            </Link>
-            <Link to="/servers" className="text-lighttext hover:text-white transition flex items-center">
-              <FiServer className="mr-1" /> Servers
-            </Link>
-            <Link to="/pricing" className="text-lighttext hover:text-white transition flex items-center">
-              <FiDollarSign className="mr-1" /> Pricing
-            </Link>
-            <Link to="/blog" className="text-lighttext hover:text-white transition flex items-center">
-              <FiBook className="mr-1" /> Blog
-            </Link>
-            <Link to="/contact" className="text-lighttext hover:text-white transition flex items-center">
-              <FiMail className="mr-1" /> Contact
-            </Link>
+          <nav className="hidden md:flex space-x-6 items-center">
+            <NavItem to="/features" icon={<FiServer />}>Features</NavItem>
+            <NavItem to="/servers" icon={<FiServer />}>Servers</NavItem>
+            <NavItem to="/pricing" icon={<FiDollarSign />}>Pricing</NavItem>
+            <NavItem to="/blog" icon={<FiBook />}>Blog</NavItem>
+            <NavItem to="/contact" icon={<FiMail />}>Contact</NavItem>
           </nav>
 
-          {/* Mobile menu button */}
+          {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-lighttext hover:text-white focus:outline-none"
+              className="text-white hover:text-[#00E5FF] focus:outline-none transition"
             >
               {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
@@ -48,43 +49,13 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden mt-4 pb-4">
+          <div className="md:hidden mt-4 pb-4 animate-fadeIn">
             <nav className="flex flex-col space-y-3">
-              <Link 
-                to="/features" 
-                className="text-lighttext hover:text-white transition flex items-center"
-                onClick={() => setIsOpen(false)}
-              >
-                <FiServer className="mr-2" /> Features
-              </Link>
-              <Link 
-                to="/servers" 
-                className="text-lighttext hover:text-white transition flex items-center"
-                onClick={() => setIsOpen(false)}
-              >
-                <FiServer className="mr-2" /> Servers
-              </Link>
-              <Link 
-                to="/pricing" 
-                className="text-lighttext hover:text-white transition flex items-center"
-                onClick={() => setIsOpen(false)}
-              >
-                <FiDollarSign className="mr-2" /> Pricing
-              </Link>
-              <Link 
-                to="/blog" 
-                className="text-lighttext hover:text-white transition flex items-center"
-                onClick={() => setIsOpen(false)}
-              >
-                <FiBook className="mr-2" /> Blog
-              </Link>
-              <Link 
-                to="/contact" 
-                className="text-lighttext hover:text-white transition flex items-center"
-                onClick={() => setIsOpen(false)}
-              >
-                <FiMail className="mr-2" /> Contact
-              </Link>
+              <NavItemMobile to="/features" icon={<FiServer />} setIsOpen={setIsOpen}>Features</NavItemMobile>
+              <NavItemMobile to="/servers" icon={<FiServer />} setIsOpen={setIsOpen}>Servers</NavItemMobile>
+              <NavItemMobile to="/pricing" icon={<FiDollarSign />} setIsOpen={setIsOpen}>Pricing</NavItemMobile>
+              <NavItemMobile to="/blog" icon={<FiBook />} setIsOpen={setIsOpen}>Blog</NavItemMobile>
+              <NavItemMobile to="/contact" icon={<FiMail />} setIsOpen={setIsOpen}>Contact</NavItemMobile>
             </nav>
           </div>
         )}
@@ -92,5 +63,28 @@ const Header = () => {
     </header>
   );
 };
+
+// Desktop nav item
+const NavItem = ({ to, icon, children }) => (
+  <Link
+    to={to}
+    className="flex items-center text-white hover:text-[#00E5FF] transition duration-200"
+  >
+    <span className="mr-1">{icon}</span>
+    {children}
+  </Link>
+);
+
+// Mobile nav item
+const NavItemMobile = ({ to, icon, children, setIsOpen }) => (
+  <Link
+    to={to}
+    onClick={() => setIsOpen(false)}
+    className="flex items-center text-white hover:text-[#00E5FF] transition duration-200"
+  >
+    <span className="mr-2">{icon}</span>
+    {children}
+  </Link>
+);
 
 export default Header;

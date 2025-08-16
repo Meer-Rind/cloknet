@@ -1,16 +1,27 @@
 import Hero from '../components/Hero';
 import FeatureCard from '../components/FeatureCard';
 import ServerCard from '../components/ServerCard';
-import { FiCheck, FiX } from 'react-icons/fi';
-
+import { FiCheck, FiX, FiAward, FiDownload, FiGlobe, FiShield, FiCheckCircle } from 'react-icons/fi';
 import PricingTable from '../components/PricingTable';
 import BlogCard from '../components/BlogCard';
-import { 
-  FiShield, FiGlobe, FiZap, FiLock, 
-  FiEyeOff, FiSmartphone, FiUser, FiServer,
-  FiDownload, FiBarChart2, FiAward, FiClock,
-  FiUsers, FiHelpCircle, FiCheckCircle
-} from 'react-icons/fi';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const ease = [0.22, 1, 0.36, 1];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease } },
+};
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease } },
+};
 
 const Home = () => {
   // Enhanced features list
@@ -30,42 +41,42 @@ const Home = () => {
       stats: "13 locations worldwide"
     },
     {
-      icon: <FiZap size={24} />,
+      icon: <FiDownload size={24} />,
       title: "Lightning Fast Speeds",
       description: "Our optimized network infrastructure delivers speeds up to 1Gbps with minimal impact on your connection.",
       glowColor: "bg-glow",
       stats: "Up to 1Gbps speeds"
     },
     {
-      icon: <FiLock size={24} />,
+      icon: <FiShield size={24} />,
       title: "Strict No-Logs Policy",
       description: "We never track, store, or share your online activities. Independently audited for transparency.",
       glowColor: "bg-green-500",
       stats: "Zero logs kept"
     },
     {
-      icon: <FiEyeOff size={24} />,
+      icon: <FiShield size={24} />,
       title: "Ad & Tracker Blocking",
       description: "Built-in protection against ads, trackers, and malicious websites for cleaner, safer browsing.",
       glowColor: "bg-yellow-500",
       stats: "Blocks 10M+ trackers"
     },
     {
-      icon: <FiSmartphone size={24} />,
+      icon: <FiShield size={24} />,
       title: "Multi-Device Support",
       description: "Protect all your devices simultaneously with a single account (up to 5 connections at once).",
       glowColor: "bg-red-500",
       stats: "5 devices at once"
     },
     {
-      icon: <FiUser size={24} />,
+      icon: <FiShield size={24} />,
       title: "Anonymous Browsing",
       description: "Hide your real IP address and location to browse anonymously without being tracked.",
       glowColor: "bg-blue-500",
       stats: "100% anonymous"
     },
     {
-      icon: <FiServer size={24} />,
+      icon: <FiShield size={24} />,
       title: "Kill Switch",
       description: "Automatically blocks internet access if VPN connection drops to prevent data leaks.",
       glowColor: "bg-pink-500",
@@ -192,178 +203,156 @@ const Home = () => {
   ];
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden relative">
+      {/* Soft ambient glows (top/bottom) */}
+      <span className="pointer-events-none absolute -top-32 -left-24 h-72 w-72 bg-cyan-500/10 blur-3xl rounded-full" />
+      <span className="pointer-events-none absolute -bottom-40 -right-24 h-80 w-80 bg-fuchsia-500/10 blur-3xl rounded-full" />
+
       {/* Hero Section */}
       <Hero />
-      
+
       {/* Stats Bar */}
-      <section className="bg-primary py-8">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+      <section className="relative bg-primary py-8">
+        {/* conic halo */}
+        <div className="pointer-events-none absolute inset-0 opacity-30 [mask-image:linear-gradient(to_bottom,black,transparent)]">
+          <div className="absolute -inset-px bg-[conic-gradient(from_180deg_at_50%_0%,rgba(255,255,255,.18),transparent,rgba(255,255,255,.18))]" />
+        </div>
+
+        <div className="container mx-auto px-4 relative">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center"
+          >
             {stats.map((stat, index) => (
-              <div key={index} className="text-white">
-                <div className="text-3xl md:text-4xl font-bold mb-2">{stat.value}</div>
-                <div className="text-sm uppercase tracking-wider">{stat.label}</div>
-              </div>
+              <motion.div key={index} variants={item} className="text-white">
+                <div className="text-3xl md:text-4xl font-bold mb-1">{stat.value}</div>
+                <div className="text-xs md:text-sm uppercase tracking-wider opacity-90">{stat.label}</div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-deepnavy">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+      <section className="py-20 bg-deepnavy relative">
+        {/* subtle grid */}
+        <div className="pointer-events-none absolute inset-0 opacity-[0.05] bg-[linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] bg-[size:36px_36px]" />
+        <div className="container mx-auto px-4 relative">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Why Choose <span className="text-primary">Cloknet VPN</span></h2>
             <p className="text-lighttext max-w-3xl mx-auto text-lg">
               We provide more than just a VPN service. Our technology is designed to keep you safe, private, and unrestricted online with enterprise-grade security made simple.
             </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          </motion.div>
+
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-80px' }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          >
             {features.map((feature, index) => (
-              <FeatureCard 
-                key={index}
-                icon={feature.icon}
-                title={feature.title}
-                description={feature.description}
-                glowColor={feature.glowColor}
-                stats={feature.stats}
-              />
+              <motion.div key={index} variants={item}>
+                <FeatureCard
+                  icon={feature.icon}
+                  title={feature.title}
+                  description={feature.description}
+                  glowColor={feature.glowColor}
+                  stats={feature.stats}
+                />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Server Locations */}
-      <section className="py-20 gradient-bg">
+      <section className="py-20 gradient-bg relative">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Global <span className="text-primary">Server Network</span></h2>
             <p className="text-lighttext max-w-3xl mx-auto text-lg">
               Connect to any of our high-speed servers worldwide for secure and private browsing with minimal latency.
             </p>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          </motion.div>
+
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-80px' }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
+          >
             {popularServers.map(server => (
-              <ServerCard key={server.id} server={server} />
+              <motion.div key={server.id} variants={item}>
+                <ServerCard server={server} />
+              </motion.div>
             ))}
-          </div>
-          
-          <div className="text-center">
-            <a 
-              href="/servers" 
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <a
+              href="/servers"
               className="inline-block border border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 rounded-md font-medium transition"
             >
               View All Server Locations
             </a>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="py-20 bg-deepnavy">
+      <section className="py-20 bg-deepnavy relative">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">How Cloknet <span className="text-primary">VPN Works</span></h2>
             <p className="text-lighttext max-w-3xl mx-auto text-lg">
               Our VPN creates a secure tunnel between your device and the internet to protect your data and privacy.
             </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            <div className="text-center">
-              <div className="w-20 h-20 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white">
-                  <FiDownload size={24} />
+          </motion.div>
+
+          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            {[
+              { icon: <FiDownload size={24} />, title: '1. Download & Install', text: 'Get our app for Windows, Mac, iOS, Android, or Linux in just a few clicks.' },
+              { icon: <FiGlobe size={24} />, title: '2. Connect to a Server', text: 'Choose from our global network of high-speed servers with one click.' },
+              { icon: <FiShield size={24} />, title: '3. Browse Securely', text: 'Your connection is now encrypted and your online activity is private.' },
+            ].map((step, i) => (
+              <motion.div key={i} variants={item} className="text-center">
+                <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white shadow-[0_0_18px_#00CFFF55]">
+                    {step.icon}
+                  </div>
                 </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">1. Download & Install</h3>
-              <p className="text-lighttext">
-                Get our app for Windows, Mac, iOS, Android, or Linux in just a few clicks.
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-20 h-20 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white">
-                  <FiGlobe size={24} />
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">2. Connect to a Server</h3>
-              <p className="text-lighttext">
-                Choose from our global network of high-speed servers with one click.
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-20 h-20 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white">
-                  <FiShield size={24} />
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">3. Browse Securely</h3>
-              <p className="text-lighttext">
-                Your connection is now encrypted and your online activity is private.
-              </p>
-            </div>
-          </div>
-          
-          <div className="bg-gray-800 bg-opacity-50 rounded-xl p-8 border border-gray-700">
+                <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
+                <p className="text-lighttext">{step.text}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <div className="bg-gray-800/50 rounded-xl p-8 border border-gray-700">
             <div className="md:flex items-center">
               <div className="md:w-1/2 mb-8 md:mb-0">
                 <h3 className="text-2xl font-bold mb-4">Advanced VPN Features</h3>
                 <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <FiCheckCircle className="text-green-500 mt-1 mr-2 flex-shrink-0" />
-                    <span>WireGuard® protocol for fastest speeds</span>
-                  </li>
-                  <li className="flex items-start">
-                    <FiCheckCircle className="text-green-500 mt-1 mr-2 flex-shrink-0" />
-                    <span>Split tunneling for flexible routing</span>
-                  </li>
-                  <li className="flex items-start">
-                    <FiCheckCircle className="text-green-500 mt-1 mr-2 flex-shrink-0" />
-                    <span>DNS leak protection</span>
-                  </li>
-                  <li className="flex items-start">
-                    <FiCheckCircle className="text-green-500 mt-1 mr-2 flex-shrink-0" />
-                    <span>IPv6 leak protection</span>
-                  </li>
+                  {['WireGuard® protocol for fastest speeds', 'Split tunneling for flexible routing', 'DNS leak protection', 'IPv6 leak protection'].map((t, idx) => (
+                    <li key={idx} className="flex items-start">
+                      <FiCheckCircle className="text-green-500 mt-1 mr-2 flex-shrink-0" />
+                      <span>{t}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="md:w-1/2 md:pl-8">
                 <div className="bg-gray-900 p-6 rounded-lg border border-gray-700">
                   <h3 className="text-lg font-semibold mb-4">Performance Metrics</h3>
                   <div className="space-y-4">
-                    <div>
-                      <div className="flex justify-between text-sm mb-1">
-                        <span className="text-lighttext">Connection Speed:</span>
-                        <span className="text-white">950 Mbps</span>
-                      </div>
-                      <div className="w-full bg-gray-700 rounded-full h-2">
-                        <div className="bg-green-500 h-2 rounded-full" style={{ width: '95%' }}></div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex justify-between text-sm mb-1">
-                        <span className="text-lighttext">Latency:</span>
-                        <span className="text-white">28 ms</span>
-                      </div>
-                      <div className="w-full bg-gray-700 rounded-full h-2">
-                        <div className="bg-blue-500 h-2 rounded-full" style={{ width: '90%' }}></div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex justify-between text-sm mb-1">
-                        <span className="text-lighttext">Uptime:</span>
-                        <span className="text-white">99.99%</span>
-                      </div>
-                      <div className="w-full bg-gray-700 rounded-full h-2">
-                        <div className="bg-purple-500 h-2 rounded-full" style={{ width: '100%' }}></div>
-                      </div>
-                    </div>
+                    <MetricBar label="Connection Speed:" value="950 Mbps" percent={95} color="bg-green-500" />
+                    <MetricBar label="Latency:" value="28 ms" percent={90} color="bg-blue-500" />
+                    <MetricBar label="Uptime:" value="99.99%" percent={100} color="bg-purple-500" />
                   </div>
                 </div>
               </div>
@@ -373,23 +362,30 @@ const Home = () => {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-20 gradient-bg">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+      <section className="py-20 gradient-bg relative">
+        {/* conic halo */}
+        <div className="pointer-events-none absolute inset-0 opacity-30 [mask-image:linear-gradient(to_top,black,transparent)]">
+          <div className="absolute -inset-px bg-[conic-gradient(from_0deg_at_50%_100%,rgba(0,207,255,.18),transparent,rgba(255,0,128,.15),transparent,rgba(0,207,255,.18))]" />
+        </div>
+
+        <div className="container mx-auto px-4 relative">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Simple, Transparent <span className="text-primary">Pricing</span></h2>
             <p className="text-lighttext max-w-3xl mx-auto text-lg">
               Choose the plan that fits your needs. All plans include our core VPN features with different levels of access.
             </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          </motion.div>
+
+          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }} className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {pricingPlans.map((plan, index) => (
-              <div 
-                key={index} 
-                className={`relative rounded-xl overflow-hidden border ${plan.popular ? 'border-primary hover-glow' : 'border-gray-700'} hover:border-primary transition`}
+              <motion.div
+                key={index}
+                variants={item}
+                className={`relative rounded-xl overflow-hidden border ${plan.popular ? 'border-primary hover-glow' : 'border-gray-700'} hover:border-primary transition bg-white/5 backdrop-blur-xl`}
+                whileHover={{ y: -6 }}
               >
                 {plan.popular && (
-                  <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
+                  <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg shadow">
                     POPULAR
                   </div>
                 )}
@@ -399,18 +395,23 @@ const Home = () => {
                     {plan.popular && <FiAward className="text-yellow-400" />}
                   </div>
                   <p className="text-lighttext text-sm mb-6">{plan.description}</p>
-                  
+
                   <div className="mb-6">
                     <span className="text-3xl font-bold text-white">${plan.price}</span>
                     <span className="text-lighttext">/month</span>
                   </div>
-                  
-                  <button 
-                    className={`w-full py-3 rounded-md font-medium mb-6 ${plan.popular ? 'bg-primary hover:bg-glow text-white hover-glow' : 'border border-primary text-primary hover:bg-primary hover:text-white'} transition`}
+
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`w-full py-3 rounded-md font-medium mb-6 ${plan.popular ? 'bg-primary hover:bg-glow text-white hover-glow' : 'border border-primary text-primary hover:bg-primary hover:text-white'} transition relative overflow-hidden`}
                   >
-                    {plan.cta}
-                  </button>
-                  
+                    <span className="relative z-10">{plan.cta}</span>
+                    <span className="pointer-events-none absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                      <span className="absolute inset-y-0 -left-1 w-1/3 skew-x-12 bg-gradient-to-r from-white/0 via-white/20 to-white/0 animate-[shimmer_1.8s_ease-in-out_infinite]" />
+                    </span>
+                  </motion.button>
+
                   <ul className="space-y-3">
                     {plan.features.map((feature, idx) => (
                       <li key={idx} className="flex items-center text-sm">
@@ -424,32 +425,32 @@ const Home = () => {
                     ))}
                   </ul>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
-          
-          <div className="mt-12 text-center">
-            <div className="inline-flex items-center bg-gray-800 bg-opacity-50 rounded-lg p-4 border border-gray-700">
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-12 text-center">
+            <div className="inline-flex items-center bg-gray-800/50 rounded-lg p-4 border border-gray-700">
               <FiCheckCircle className="text-green-500 mr-2" size={20} />
               <span className="text-lighttext">All plans include our 30-day money-back guarantee</span>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Testimonials */}
       <section className="py-20 bg-deepnavy">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">What Our <span className="text-primary">Users Say</span></h2>
             <p className="text-lighttext max-w-3xl mx-auto text-lg">
               Don't just take our word for it. Here's what our customers have to say about Cloknet VPN.
             </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          </motion.div>
+
+          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-gray-800 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+              <motion.div key={index} variants={item} whileHover={{ y: -4 }} className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
                     <svg
@@ -470,24 +471,24 @@ const Home = () => {
                     <p className="text-lighttext text-sm">{testimonial.role}</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Comparison Section */}
       <section className="py-20 gradient-bg">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Cloknet vs. <span className="text-primary">Other VPNs</span></h2>
             <p className="text-lighttext max-w-3xl mx-auto text-lg">
               See how we stack up against the competition when it comes to features, speed, and value.
             </p>
-          </div>
-          
-          <div className="overflow-x-auto">
-            <table className="w-full bg-gray-800 bg-opacity-50 rounded-lg border border-gray-700">
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <table className="w-full bg-gray-800/50 rounded-lg border border-gray-700 overflow-hidden">
               <thead>
                 <tr className="border-b border-gray-700">
                   <th className="px-6 py-4 text-left text-lighttext font-medium">Feature</th>
@@ -535,62 +536,93 @@ const Home = () => {
                 </tr>
               </tbody>
             </table>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Blog Section */}
       <section className="py-20 bg-deepnavy">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Latest from Our <span className="text-primary">Blog</span></h2>
             <p className="text-lighttext max-w-3xl mx-auto text-lg">
               Stay updated with the latest news, tips, and insights about online privacy, security, and VPN technology.
             </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          </motion.div>
+
+          <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }} className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             {blogPosts.map(post => (
-              <BlogCard key={post.id} post={post} />
+              <motion.div key={post.id} variants={item}>
+                <BlogCard post={post} />
+              </motion.div>
             ))}
-          </div>
-          
-          <div className="text-center">
-            <a 
-              href="/blog" 
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center">
+            <a
+              href="/blog"
               className="inline-block border border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 rounded-md font-medium transition"
             >
               View All Articles
             </a>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 gradient-bg">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Ready to Take Control of Your <span className="text-primary">Online Privacy</span>?</h2>
-          <p className="text-lighttext text-xl max-w-3xl mx-auto mb-8">
+      <section className="py-20 gradient-bg relative">
+        <div className="container mx-auto px-4 text-center relative">
+          <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+            Ready to Take Control of Your <span className="text-primary">Online Privacy</span>?
+          </motion.h2>
+          <motion.p initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-lighttext text-xl max-w-3xl mx-auto mb-8">
             Join over 500,000 users who trust Cloknet VPN to protect their internet connection.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a 
-              href="/pricing" 
+          </motion.p>
+          <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex flex-col sm:flex-row justify-center gap-4">
+            <a
+              href="/pricing"
               className="bg-primary hover:bg-glow text-white px-8 py-4 rounded-md font-medium hover-glow transition text-lg"
             >
               Get Cloknet VPN Now
             </a>
-            <a 
-              href="/features" 
+            <a
+              href="/features"
               className="border border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 rounded-md font-medium transition text-lg"
             >
               Learn More
             </a>
-          </div>
+          </motion.div>
         </div>
       </section>
+
+      {/* local keyframes */}
+      <style>{`
+        @keyframes shimmer { 0%{ transform: translateX(-100%);} 100%{ transform: translateX(200%);} }
+        @media (prefers-reduced-motion: reduce){
+          *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+        }
+      `}</style>
     </div>
   );
 };
+
+/** animated metric bar for the “Performance Metrics” card **/
+const MetricBar = ({ label, value, percent, color }) => (
+  <div>
+    <div className="flex justify-between text-sm mb-1">
+      <span className="text-lighttext">{label}</span>
+      <span className="text-white">{value}</span>
+    </div>
+    <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
+      <motion.div
+        initial={{ width: 0 }}
+        whileInView={{ width: `${percent}%` }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease }}
+        className={`h-2 rounded-full ${color}`}
+      />
+    </div>
+  </div>
+);
 
 export default Home;

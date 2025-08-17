@@ -2,6 +2,12 @@ import ContactForm from '../components/ContactForm';
 import { FiMail, FiPhone, FiMapPin, FiClock } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
+/* ---------- PALETTE ---------- */
+const DeepBlue1 = '#021A2B';
+const DeepBlue2 = '#053458';
+const NeonBlue  = '#18A9FF';
+const BurningBlue = '#00C7FF';
+
 const ease = [0.22, 1, 0.36, 1];
 
 const container = {
@@ -16,18 +22,45 @@ const fadeUp = {
 
 const Contact = () => {
   return (
-    <section className="relative py-16 overflow-hidden">
-      {/* Ambient glows */}
-      <span className="pointer-events-none absolute -top-28 -left-24 h-80 w-80 bg-cyan-400/10 blur-3xl rounded-full" />
-      <span className="pointer-events-none absolute -bottom-40 -right-24 h-96 w-96 bg-fuchsia-500/10 blur-3xl rounded-full" />
-      {/* Conic halo */}
-      <div className="pointer-events-none absolute inset-0 opacity-30 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]">
-        <div className="absolute -inset-px bg-[conic-gradient(from_180deg_at_50%_0%,rgba(0,207,255,.18),transparent,rgba(255,0,128,.15),transparent,rgba(0,207,255,.18))]" />
+    <section
+      className="relative py-16 overflow-hidden"
+      style={{ background: DeepBlue1 }}
+    >
+      {/* Ambient halos (palette only) */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        {/* top-left orb */}
+        <span
+          className="absolute -top-28 -left-24 h-80 w-80 rounded-full blur-3xl"
+          style={{ background: `${NeonBlue}1A` }}
+        />
+        {/* bottom-right orb */}
+        <span
+          className="absolute -bottom-40 -right-24 h-96 w-96 rounded-full blur-3xl"
+          style={{ background: `${BurningBlue}1A` }}
+        />
+        {/* conic halo */}
+        <div
+          className="absolute inset-0"
+          style={{
+            opacity: 0.30,
+            maskImage: 'linear-gradient(to bottom, black, transparent 85%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black, transparent 85%)',
+            background: `conic-gradient(from 180deg at 50% 0%, ${BurningBlue}2E, transparent, ${NeonBlue}26, transparent, ${BurningBlue}2E)`
+          }}
+        />
+        {/* subtle grid */}
+        <div
+          className="absolute inset-0"
+          style={{
+            opacity: 0.06,
+            background: `linear-gradient(to right, ${NeonBlue} 1px, transparent 1px),
+                         linear-gradient(to bottom, ${NeonBlue} 1px, transparent 1px)`,
+            backgroundSize: '36px 36px'
+          }}
+        />
       </div>
-      {/* Subtle grid texture */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.05] bg-[linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] bg-[size:36px_36px]" />
 
-      <div className="relative container mx-auto px-4">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           variants={fadeUp}
@@ -35,16 +68,31 @@ const Contact = () => {
           animate="show"
           className="text-center mb-12"
         >
-          <h1 className="text-4xl font-extrabold mb-4 drop-shadow-[0_0_24px_rgba(0,207,255,.15)]">
-            Contact <span className="text-primary">Us</span>
+          <h1
+            className="text-4xl sm:text-5xl font-extrabold mb-4"
+            style={{ color: '#FFFFFF', textShadow: '0 0 24px rgba(0,199,255,0.15)' }}
+          >
+            Contact <span style={{ color: BurningBlue }}>Us</span>
           </h1>
-          <p className="text-lighttext max-w-2xl mx-auto">
+          <p
+            className="max-w-2xl mx-auto"
+            style={{ color: NeonBlue }}
+          >
             Have questions or need support? Reach out to our team and we'll get back to you as soon as possible.
           </p>
 
-          {/* animated underline */}
-          <div className="relative w-28 h-[3px] mx-auto mt-5 bg-white/10 rounded-full overflow-hidden">
-            <span className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-[#00CFFF] to-[#9B5CFF] animate-[underline_2.2s_ease-in-out_infinite]" />
+          {/* animated underline (Neon → Burning) */}
+          <div
+            className="relative w-28 h-[3px] mx-auto mt-5 rounded-full overflow-hidden"
+            style={{ background: `${NeonBlue}26` }}
+          >
+            <span
+              className="absolute inset-y-0 left-0 w-1/2"
+              style={{
+                background: `linear-gradient(90deg, ${NeonBlue}, ${BurningBlue})`,
+                animation: 'underline 2.2s ease-in-out infinite'
+              }}
+            />
           </div>
         </motion.div>
 
@@ -53,49 +101,75 @@ const Contact = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-80px' }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8"
         >
-          {/* Left: Form (glassy card wrapper to match right side) */}
+          {/* Left: Form (kept glassy; ContactForm is already palette-pure) */}
           <motion.div variants={fadeUp} className="relative">
-            <span className="pointer-events-none absolute -inset-[1px] rounded-3xl opacity-0 hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(140px_140px_at_20%_0%,rgba(0,207,255,.14),transparent_60%)]" />
+            <span
+              className="pointer-events-none absolute -inset-[1px] rounded-3xl opacity-0 hover:opacity-100 transition-opacity duration-500"
+              style={{
+                background: 'radial-gradient(140px 140px at 20% 0%, rgba(0,199,255,0.14), transparent 60%)'
+              }}
+            />
             <ContactForm />
           </motion.div>
 
-          {/* Right: Contact methods */}
+          {/* Right: Contact methods (glassy card) */}
           <motion.div
             variants={fadeUp}
-            className="relative h-full rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 shadow-[0_0_28px_#00CFFF22]"
+            className="relative h-full rounded-3xl p-6 sm:p-8"
+            style={{
+              border: `1px solid ${NeonBlue}26`,
+              background: `${DeepBlue2}CC`,
+              backdropFilter: 'blur(16px)',
+              boxShadow: '0 0 28px rgba(0,199,255,0.13)'
+            }}
           >
             {/* soft inner ring */}
-            <div className="pointer-events-none absolute inset-0 rounded-3xl border border-white/10" />
-            <h2 className="text-2xl font-semibold mb-6">Other Ways to Reach Us</h2>
+            <div
+              className="pointer-events-none absolute inset-0 rounded-3xl"
+              style={{ border: `1px solid ${NeonBlue}26` }}
+            />
+            <h2
+              className="text-2xl font-semibold mb-6"
+              style={{ color: '#FFFFFF' }}
+            >
+              Other Ways to Reach Us
+            </h2>
 
             <div className="space-y-6">
               <InfoRow
-                icon={<FiMail className="text-primary text-xl" />}
+                iconColor={BurningBlue}
+                icon={<FiMail size={20} />}
                 title="Email Us"
                 lines={['support@cloknetvpn.com', 'sales@cloknetvpn.com']}
               />
               <InfoRow
-                icon={<FiPhone className="text-primary text-xl" />}
+                iconColor={BurningBlue}
+                icon={<FiPhone size={20} />}
                 title="Call Us"
-                lines={['+1 (555) 123-4567', 'Mon-Fri, 9am-5pm EST']}
+                lines={['+1 (555) 123-4567', 'Mon–Fri, 9am–5pm EST']}
               />
               <InfoRow
-                icon={<FiMapPin className="text-primary text-xl" />}
+                iconColor={BurningBlue}
+                icon={<FiMapPin size={20} />}
                 title="Our Office"
                 lines={['123 Security Lane', 'Privacy City, PC 10101']}
               />
               <InfoRow
-                icon={<FiClock className="text-primary text-xl" />}
+                iconColor={BurningBlue}
+                icon={<FiClock size={20} />}
                 title="Support Hours"
-                lines={['24/7 Premium Support', 'Standard Support: Mon-Sun, 6am-10pm EST']}
+                lines={['24/7 Premium Support', 'Standard: Mon–Sun, 6am–10pm EST']}
               />
             </div>
 
             {/* Divider + micro CTA */}
-            <div className="mt-8 pt-6 border-t border-white/10">
-              <p className="text-xs text-lighttext">
+            <div
+              className="mt-8 pt-6"
+              style={{ borderTop: `1px solid ${NeonBlue}26` }}
+            >
+              <p className="text-xs" style={{ color: NeonBlue }}>
                 Prefer chat? Open the assistant from the bottom-right — we’re always here.
               </p>
             </div>
@@ -103,52 +177,69 @@ const Contact = () => {
         </motion.div>
       </div>
 
-      {/* local keyframes + reduced motion */}
+      {/* keyframes + reduced motion */}
       <style>{`
         @keyframes underline { 0%{transform:translateX(-100%)} 100%{transform:translateX(200%)} }
         @keyframes pulseRing {
-          0% { box-shadow: 0 0 0 0 rgba(0,207,255,.35) }
-          100% { box-shadow: 0 0 0 18px rgba(0,207,255,0) }
+          0% { box-shadow: 0 0 0 0 rgba(0,199,255,.35) }
+          100% { box-shadow: 0 0 0 18px rgba(0,199,255,0) }
         }
         @media (prefers-reduced-motion: reduce){
-          *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+          *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;}
         }
       `}</style>
     </section>
   );
 };
 
-/** Row with icon + animated glass chip */
-const InfoRow = ({ icon, title, lines }) => (
+/** Row with icon + animated glass chip (palette-only) */
+const InfoRow = ({ icon, iconColor, title, lines }) => (
   <motion.div
     initial={{ opacity: 0, y: 10 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     whileHover={{ y: -2 }}
-    transition={{ duration: 0.45, ease }}
+    transition={{ duration: 0.45, ease: [0.22,1,0.36,1] }}
     className="relative flex"
   >
     {/* Icon chip with pulse ring on hover */}
     <div className="mr-4">
-      <div className="relative w-12 h-12 rounded-full bg-primary/15 border border-white/10 flex items-center justify-center backdrop-blur-md">
-        <span className="absolute inset-0 rounded-full ring-1 ring-white/10" />
-        <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100" />
-        <div className="group hover:animate-[pulseRing_1.8s_ease-out] rounded-full">
-          {icon}
+      <div
+        className="relative w-12 h-12 rounded-full flex items-center justify-center"
+        style={{
+          background: `${DeepBlue1}CC`,
+          border: `1px solid ${NeonBlue}26`,
+          backdropFilter: 'blur(12px)'
+        }}
+      >
+        <div
+          className="group rounded-full"
+          style={{ animation: 'none' }}
+          onMouseEnter={(e)=>{ e.currentTarget.style.animation = 'pulseRing 1.8s ease-out'; }}
+          onAnimationEnd={(e)=>{ e.currentTarget.style.animation = 'none'; }}
+        >
+          <span style={{ color: iconColor }}>{icon}</span>
         </div>
       </div>
     </div>
 
     {/* Copy */}
     <div>
-      <h3 className="font-medium text-white mb-1">{title}</h3>
+      <h3 className="font-medium mb-1" style={{ color: '#FFFFFF' }}>{title}</h3>
       {lines.map((l, i) => (
-        <p key={i} className="text-lighttext">{l}</p>
+        <p key={i} style={{ color: NeonBlue }}>{l}</p>
       ))}
     </div>
 
     {/* corner spotlight */}
-    <span className="pointer-events-none absolute -inset-2 rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(120px_120px_at_15%_0%,rgba(0,207,255,.12),transparent_60%)]" />
+    <span
+      className="pointer-events-none absolute -inset-2 rounded-2xl"
+      style={{
+        opacity: 0,
+        transition: 'opacity .5s',
+        background: 'radial-gradient(120px 120px at 15% 0%, rgba(0,199,255,.12), transparent 60%)'
+      }}
+    />
   </motion.div>
 );
 

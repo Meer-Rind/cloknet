@@ -106,10 +106,7 @@ const ContactForm = () => {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease }}
-        className="relative rounded-[26px] p-6 sm:p-8 md:p-10background: `linear-gradient(160deg, ${DeepBlue2}CC, ${DeepBlue1}CC)`,
-          border: `1px solid ${NeonBlue}26`,
-          boxShadow: '0 0 25px rgba(0,199,255,0.20)',
-          backdropFilter: 'blur(16px)'"
+        className="relative rounded-[26px] p-6 sm:p-8 md:p-10"
         // glassy shell
         style={{
           background: `linear-gradient(160deg, ${DeepBlue2}CC, ${DeepBlue1}CC)`,
@@ -117,7 +114,7 @@ const ContactForm = () => {
           boxShadow: '0 0 25px rgba(0,199,255,0.20)',
           backdropFilter: 'blur(16px)'
         }}
-        >
+      >
         {/* Ambient orbs (palette only) */}
         <span className="pointer-events-none absolute -left-10 -top-10 h-36 w-36 rounded-full blur-3xl"
               style={{ background: 'rgba(24,169,255,0.10)' }} />

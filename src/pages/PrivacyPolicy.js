@@ -2,6 +2,11 @@ import { Link } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
+const DeepBlue1 = '#021A2B';
+const DeepBlue2 = '#053458';
+const NeonBlue  = '#18A9FF';
+const BurningBlue = '#00C7FF';
+
 const ease = [0.22, 1, 0.36, 1];
 const fadeUp = {
   hidden: { opacity: 0, y: 14 },
@@ -10,16 +15,41 @@ const fadeUp = {
 
 const PrivacyPolicy = () => {
   return (
-    <section className="relative py-16 overflow-hidden">
-      {/* Ambient brand glows */}
-      <span className="pointer-events-none absolute -top-28 -left-24 h-80 w-80 bg-cyan-400/10 blur-3xl rounded-full" />
-      <span className="pointer-events-none absolute -bottom-40 -right-24 h-96 w-96 bg-fuchsia-500/10 blur-3xl rounded-full" />
-      {/* Conic halo */}
-      <div className="pointer-events-none absolute inset-0 opacity-30 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]">
-        <div className="absolute -inset-px bg-[conic-gradient(from_180deg_at_50%_0%,rgba(0,207,255,.18),transparent,rgba(255,0,128,.15),transparent,rgba(0,207,255,.18))]" />
+    <section
+      className="relative py-16 overflow-hidden"
+      style={{ background: DeepBlue1 }}
+    >
+      {/* Ambient brand glows (palette-only) */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <span
+          className="absolute -top-28 -left-24 h-80 w-80 rounded-full blur-3xl"
+          style={{ background: `${NeonBlue}1A` }}
+        />
+        <span
+          className="absolute -bottom-40 -right-24 h-96 w-96 rounded-full blur-3xl"
+          style={{ background: `${BurningBlue}1A` }}
+        />
+        {/* Conic halo (Neon ↔ Burning) */}
+        <div
+          className="absolute inset-0"
+          style={{
+            opacity: 0.30,
+            maskImage: 'linear-gradient(to bottom, black, transparent 85%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black, transparent 85%)',
+            background: `conic-gradient(from 180deg at 50% 0%, ${BurningBlue}2E, transparent, ${NeonBlue}26, transparent, ${BurningBlue}2E)`
+          }}
+        />
+        {/* Subtle grid (neon lines) */}
+        <div
+          className="absolute inset-0"
+          style={{
+            opacity: 0.06,
+            background: `linear-gradient(to right, ${NeonBlue} 1px, transparent 1px),
+                         linear-gradient(to bottom, ${NeonBlue} 1px, transparent 1px)`,
+            backgroundSize: '36px 36px'
+          }}
+        />
       </div>
-      {/* Subtle grid texture */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.05] bg-[linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] bg-[size:36px_36px]" />
 
       <div className="relative container mx-auto px-4 max-w-4xl">
         {/* Back link */}
@@ -30,7 +60,8 @@ const PrivacyPolicy = () => {
         >
           <Link
             to="/"
-            className="inline-flex items-center text-primary hover:text-glow transition group"
+            className="inline-flex items-center group"
+            style={{ color: BurningBlue }}
           >
             <FiArrowLeft className="mr-2 transition-transform group-hover:-translate-x-0.5" /> Back to Home
           </Link>
@@ -41,25 +72,47 @@ const PrivacyPolicy = () => {
           variants={fadeUp}
           initial="hidden"
           animate="show"
-          className="relative rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 md:p-10 shadow-[0_0_28px_#00CFFF22] prose prose-invert max-w-none"
+          className="relative rounded-3xl p-6 md:p-10 prose prose-invert max-w-none"
+          style={{
+            color: NeonBlue,
+            background: `${DeepBlue2}CC`,
+            backdropFilter: 'blur(16px)',
+            border: `1px solid ${NeonBlue}26`,
+            boxShadow: '0 0 28px rgba(0,199,255,0.13)'
+          }}
         >
           {/* Inner soft border */}
-          <div className="pointer-events-none absolute inset-0 rounded-3xl border border-white/10" />
+          <div
+            className="pointer-events-none absolute inset-0 rounded-3xl"
+            style={{ border: `1px solid ${NeonBlue}26` }}
+          />
 
           {/* Title + underline */}
           <header className="relative not-prose mb-6">
-            <h1 className="text-4xl font-extrabold drop-shadow-[0_0_24px_rgba(0,207,255,.15)]">
+            <h1
+              className="text-4xl font-extrabold"
+              style={{ color: '#FFFFFF', textShadow: '0 0 24px rgba(0,199,255,0.15)' }}
+            >
               Privacy Policy
             </h1>
-            <p className="text-lighttext mt-1">Last updated: June 1, 2023</p>
-            <div className="relative w-28 h-[3px] mt-5 bg-white/10 rounded-full overflow-hidden">
-              <span className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-[#00CFFF] to-[#9B5CFF] animate-[underline_2.2s_ease-in-out_infinite]" />
+            <p style={{ color: NeonBlue, marginTop: 4 }}>Last updated: June 1, 2023</p>
+            <div
+              className="relative w-28 h-[3px] mt-5 rounded-full overflow-hidden"
+              style={{ background: `${NeonBlue}26` }}
+            >
+              <span
+                className="absolute inset-y-0 left-0 w-1/2"
+                style={{
+                  background: `linear-gradient(90deg, ${NeonBlue}, ${BurningBlue})`,
+                  animation: 'underline 2.2s ease-in-out infinite'
+                }}
+              />
             </div>
           </header>
 
-          {/* Content (unchanged text) */}
+          {/* Content */}
           <Section>
-            <h2>1. Introduction</h2>
+            <h2 style={{ color: '#FFFFFF' }}>1. Introduction</h2>
             <p>
               Cloknet VPN ("us", "we", or "our") operates the Cloknet VPN service (the "Service"). This page informs you of our policies
               regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated
@@ -68,14 +121,14 @@ const PrivacyPolicy = () => {
           </Section>
 
           <Section>
-            <h2>2. Information Collection and Use</h2>
+            <h2 style={{ color: '#FFFFFF' }}>2. Information Collection and Use</h2>
             <p>
               We collect several different types of information for various purposes to provide and improve our Service to you.
             </p>
 
-            <h3>Types of Data Collected</h3>
+            <h3 style={{ color: '#FFFFFF' }}>Types of Data Collected</h3>
             <p>
-              <strong>Personal Data:</strong> While using our Service, we may ask you to provide us with certain personally identifiable
+              <strong style={{ color: '#FFFFFF' }}>Personal Data:</strong> While using our Service, we may ask you to provide us with certain personally identifiable
               information that can be used to contact or identify you ("Personal Data"). Personally identifiable information may include,
               but is not limited to:
             </p>
@@ -85,7 +138,7 @@ const PrivacyPolicy = () => {
               <li>Cookies and Usage Data</li>
             </ul>
 
-            <h3>Usage Data</h3>
+            <h3 style={{ color: '#FFFFFF' }}>Usage Data</h3>
             <p>
               We may also collect information how the Service is accessed and used ("Usage Data"). This Usage Data may include information
               such as your computer&apos;s Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our
@@ -95,7 +148,7 @@ const PrivacyPolicy = () => {
           </Section>
 
           <Section>
-            <h2>3. Use of Data</h2>
+            <h2 style={{ color: '#FFFFFF' }}>3. Use of Data</h2>
             <p>Cloknet VPN uses the collected data for various purposes:</p>
             <ul>
               <li>To provide and maintain the Service</li>
@@ -109,7 +162,7 @@ const PrivacyPolicy = () => {
           </Section>
 
           <Section>
-            <h2>4. No Logs Policy</h2>
+            <h2 style={{ color: '#FFFFFF' }}>4. No Logs Policy</h2>
             <p>
               Cloknet VPN has a strict no-logs policy. We do not monitor, record, store, or log any information regarding your internet
               activities while using our VPN service, including:
@@ -124,7 +177,7 @@ const PrivacyPolicy = () => {
           </Section>
 
           <Section>
-            <h2>5. Changes to This Privacy Policy</h2>
+            <h2 style={{ color: '#FFFFFF' }}>5. Changes to This Privacy Policy</h2>
             <p>
               We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on
               this page and updating the &quot;effective date&quot; at the top of this Privacy Policy.
@@ -132,7 +185,7 @@ const PrivacyPolicy = () => {
           </Section>
 
           <Section>
-            <h2>6. Contact Us</h2>
+            <h2 style={{ color: '#FFFFFF' }}>6. Contact Us</h2>
             <p>
               If you have any questions about this Privacy Policy, please contact us at privacy@cloknetvpn.com.
             </p>
@@ -146,12 +199,17 @@ const PrivacyPolicy = () => {
         @media (prefers-reduced-motion: reduce){
           *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
         }
+        /* prose reset so lists & body inherit NeonBlue while headings stay white */
+        .prose :where(p, ul, ol, li){ color: ${NeonBlue}; }
+        .prose :where(h1, h2, h3, h4){ color: #FFFFFF; }
+        .prose strong{ color:#FFFFFF; }
+        .prose a{ color:${BurningBlue}; }
       `}</style>
     </section>
   );
 };
 
-/** Section wrapper with gentle fade-up per block */
+/** Section wrapper with gentle fade-up per block + palette separator */
 const Section = ({ children }) => (
   <motion.section
     variants={fadeUp}
@@ -161,8 +219,11 @@ const Section = ({ children }) => (
     className="space-y-3"
   >
     {children}
-    {/* subtle separator */}
-    <div className="h-px w-full bg-white/5 my-6" />
+    {/* subtle separator (palette) */}
+    <div
+      className="h-px w-full my-6"
+      style={{ background: `${NeonBlue}26` }}
+    />
   </motion.section>
 );
 

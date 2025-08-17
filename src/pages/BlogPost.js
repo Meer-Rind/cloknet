@@ -3,6 +3,12 @@ import { FiCalendar, FiClock, FiArrowLeft } from 'react-icons/fi';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { useRef } from 'react';
 
+/* ---------- PALETTE ---------- */
+const DeepBlue1 = '#021A2B';
+const DeepBlue2 = '#053458';
+const NeonBlue  = '#18A9FF';
+const BurningBlue = '#00C7FF';
+
 const ease = [0.22, 1, 0.36, 1];
 
 const BlogPost = () => {
@@ -22,19 +28,19 @@ const BlogPost = () => {
       title: "Why Online Privacy Matters More Than Ever in 2023",
       content: `
         <p>In an age where nearly every click, scroll, and search is being tracked, your online privacy has never been more important. We live in a world where our digital lives are constantly monitored — and often monetized.</p>
-        
-        <h2 class="mt-6 text-xl font-semibold">🔍 What’s Threatening Your Privacy?</h2>
+
+        <h2>🔍 What’s Threatening Your Privacy?</h2>
         <p>Let’s look at the growing concerns that make online privacy a top priority:</p>
-        <ul class="list-disc list-inside">
+        <ul>
           <li><strong>Massive Data Harvesting:</strong> Big tech companies track your behavior to build detailed profiles — often without your full consent.</li>
           <li><strong>Unseen Government Surveillance:</strong> Governments around the world are ramping up their digital surveillance operations.</li>
           <li><strong>Rise in Cybercrime:</strong> Identity theft, phishing, and ransomware attacks are skyrocketing.</li>
           <li><strong>Frequent Data Breaches:</strong> Even well-known brands experience leaks, exposing millions of users' sensitive data.</li>
         </ul>
-        
-        <h2 class="mt-6 text-xl font-semibold">🛡️ How Cloknet VPN Shields You</h2>
+
+        <h2>🛡️ How Cloknet VPN Shields You</h2>
         <p>A VPN (Virtual Private Network) is one of the easiest and most effective ways to take back control of your online activity. Here’s how Cloknet VPN helps:</p>
-        <ol class="list-decimal list-inside">
+        <ol>
           <li><strong>Military-Grade Encryption:</strong> Your data is fully encrypted, making it unreadable to third parties.</li>
           <li><strong>Location Masking:</strong> By hiding your IP address, it’s nearly impossible to trace your online behavior.</li>
           <li><strong>Safe Public Wi-Fi Use:</strong> Whether you're in a coffee shop or an airport, stay protected on unsecured networks.</li>
@@ -54,27 +60,62 @@ const BlogPost = () => {
   const post = blogPosts[slug] || blogPosts["why-online-privacy-matters"];
 
   return (
-    <section className="relative bg-black text-white overflow-hidden">
-      {/* Top reading progress bar */}
+    <section
+      className="relative overflow-hidden"
+      style={{ background: DeepBlue1, color: '#FFFFFF' }}
+    >
+      {/* Top reading progress bar (Neon → Burning) */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] z-[60] origin-left bg-gradient-to-r from-cyan-400 via-[#00CFFF] to-fuchsia-500"
-        style={{ scaleX: progressX }}
+        className="fixed top-0 left-0 right-0 h-[2px] z-[60] origin-left"
+        style={{
+          scaleX: progressX,
+          background: `linear-gradient(90deg, ${NeonBlue}, ${BurningBlue})`
+        }}
       />
 
-      {/* Ambient conic halos + grid texture */}
-      <span className="pointer-events-none absolute -top-32 -left-24 h-80 w-80 bg-cyan-500/10 blur-3xl rounded-full" />
-      <span className="pointer-events-none absolute -bottom-40 -right-24 h-96 w-96 bg-fuchsia-500/10 blur-3xl rounded-full" />
-      <div className="pointer-events-none absolute inset-0 opacity-30 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]">
-        <div className="absolute -inset-px bg-[conic-gradient(from_180deg_at_50%_0%,rgba(0,207,255,.18),transparent,rgba(255,0,128,.15),transparent,rgba(0,207,255,.18))]" />
+      {/* Ambient halos + conic sheen + grid (palette only) */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        {/* top radial halo */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(60% 50% at 50% 0%, ${BurningBlue}22, transparent 60%)`
+          }}
+        />
+        {/* conic shimmer */}
+        <div
+          className="absolute inset-0"
+          style={{
+            opacity: 0.25,
+            maskImage: 'linear-gradient(to bottom, black, transparent 85%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black, transparent 85%)',
+            background: `conic-gradient(from 180deg at 50% 0%, ${BurningBlue}2E, transparent, ${NeonBlue}26, transparent, ${BurningBlue}2E)`
+          }}
+        />
+        {/* subtle grid */}
+        <div
+          className="absolute inset-0"
+          style={{
+            opacity: 0.06,
+            background: `linear-gradient(to right, ${NeonBlue} 1px, transparent 1px),
+                         linear-gradient(to bottom, ${NeonBlue} 1px, transparent 1px)`,
+            backgroundSize: '36px 36px'
+          }}
+        />
       </div>
-      <div className="pointer-events-none absolute inset-0 opacity-[0.05] bg-[linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] bg-[size:36px_36px]" />
 
-      <div className="relative max-w-4xl mx-auto px-4 py-16">
+      <div className="relative max-w-4xl mx-auto px-4 py-14 md:py-16">
         {/* Back link */}
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0, transition: { duration: 0.45, ease } }}>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0, transition: { duration: 0.45, ease } }}
+        >
           <Link
             to="/blog"
-            className="inline-flex items-center text-primary hover:text-glow mb-6 transition"
+            className="inline-flex items-center mb-6 transition"
+            style={{ color: NeonBlue }}
+            onMouseEnter={(e)=>{e.currentTarget.style.color = BurningBlue;}}
+            onMouseLeave={(e)=>{e.currentTarget.style.color = NeonBlue;}}
           >
             <FiArrowLeft className="mr-2" /> Back to Blog
           </Link>
@@ -86,15 +127,18 @@ const BlogPost = () => {
           animate={{ opacity: 1, y: 0, transition: { duration: 0.5, ease } }}
           className="mb-6"
         >
-          <h1 className="text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-[0_0_24px_rgba(0,207,255,.15)]">
+          <h1
+            className="text-4xl md:text-5xl font-extrabold leading-tight"
+            style={{ color: '#FFFFFF', textShadow: '0 0 24px rgba(0,199,255,0.15)' }}
+          >
             {post.title}
           </h1>
-          <div className="flex items-center text-lighttext text-sm mt-4">
-            <div className="flex items-center mr-4">
+          <div className="flex flex-wrap items-center gap-4 mt-4 text-sm">
+            <div className="flex items-center" style={{ color: NeonBlue }}>
               <FiCalendar className="mr-2" />
               <span>{post.date}</span>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center" style={{ color: NeonBlue }}>
               <FiClock className="mr-2" />
               <span>{post.readTime} min read</span>
             </div>
@@ -105,28 +149,51 @@ const BlogPost = () => {
         <motion.div
           initial={{ opacity: 0, y: 12, scale: 0.99 }}
           animate={{ opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease } }}
-          className="relative mb-8 rounded-2xl border border-white/10 overflow-hidden bg-white/5 backdrop-blur-xl shadow-[0_0_28px_#00CFFF22]"
+          className="relative mb-8 rounded-2xl overflow-hidden"
+          style={{
+            border: `1px solid ${NeonBlue}1A`,
+            background: `${DeepBlue2}80`,
+            backdropFilter: 'blur(16px)',
+            boxShadow: '0 0 28px rgba(0,199,255,0.13)'
+          }}
         >
           <img
             src={post.image}
             alt={post.title}
             className="w-full h-64 md:h-80 object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/0 to-transparent" />
-          {/* Top-left soft badge glow */}
-          <span className="pointer-events-none absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold bg-black/40 border border-white/10 backdrop-blur-md">
+          <div
+            className="absolute inset-0"
+            style={{ background: `linear-gradient(to top, ${DeepBlue1}4D, ${DeepBlue1}00)` }}
+          />
+          {/* Badge */}
+          <span
+            className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md"
+            style={{
+              color: '#FFFFFF',
+              background: `${DeepBlue1}66`,
+              border: `1px solid ${NeonBlue}26`
+            }}
+          >
             Cloknet Blog
           </span>
         </motion.div>
 
-        {/* Article body with smooth reveal on scroll */}
+        {/* Article body */}
         <article ref={articleRef}>
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.45, ease }}
-            className="prose prose-invert max-w-none leading-relaxed text-[17px] md:text-lg prose-headings:scroll-mt-24"
+            className="prose max-w-none"
+            // Tailwind prose is optional; inline palette styles ensure consistency.
+            style={{
+              // base text
+              color: NeonBlue,
+              fontSize: '17px',
+              lineHeight: 1.75,
+            }}
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </article>
@@ -137,16 +204,24 @@ const BlogPost = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.45, ease }}
-          className="mt-12 pt-8 border-t border-gray-700 flex items-center"
+          className="mt-12 pt-8 flex items-center"
+          style={{ borderTop: `1px solid ${NeonBlue}26` }}
         >
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#0ea5e9] to-[#9333ea] p-[2px] mr-4">
-            <div className="w-full h-full rounded-full bg-gray-900 flex items-center justify-center text-white font-bold text-lg">
+          <div className="w-12 h-12 rounded-full p-[2px] mr-4"
+               style={{
+                 background: `linear-gradient(135deg, ${NeonBlue}, ${BurningBlue})`,
+                 boxShadow: '0 0 16px rgba(0,199,255,0.25)'
+               }}>
+            <div
+              className="w-full h-full rounded-full flex items-center justify-center font-bold text-lg"
+              style={{ background: DeepBlue2, color: '#FFFFFF' }}
+            >
               {post.author.charAt(0)}
             </div>
           </div>
           <div>
-            <h4 className="font-medium text-white">{post.author}</h4>
-            <p className="text-lighttext text-sm">{post.authorRole}</p>
+            <h4 className="font-medium" style={{ color: '#FFFFFF' }}>{post.author}</h4>
+            <p className="text-sm" style={{ color: NeonBlue }}>{post.authorRole}</p>
           </div>
         </motion.div>
 
@@ -158,7 +233,7 @@ const BlogPost = () => {
           transition={{ duration: 0.45, ease }}
           className="mt-16"
         >
-          <h3 className="text-2xl font-semibold mb-6">📚 Related Articles</h3>
+          <h3 className="text-2xl font-semibold mb-6" style={{ color: '#FFFFFF' }}>📚 Related Articles</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <RelatedCard
               title="How to Set Up a VPN on All Your Devices"
@@ -174,10 +249,16 @@ const BlogPost = () => {
         </motion.div>
       </div>
 
-      {/* Local keyframes + accessibility */}
+      {/* local keyframes + accessibility */}
       <style>{`
-        @media (prefers-reduced-motion: reduce) {
-          * { animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important }
+        /* prose palette overrides */
+        .prose h2 { color: #FFFFFF; font-size: 1.25rem; font-weight: 700; margin-top: 1.25rem; }
+        .prose p  { color: ${NeonBlue}; margin: 0.75rem 0; }
+        .prose ul, .prose ol { color: ${NeonBlue}; padding-left: 1.1rem; margin: 0.5rem 0 0.75rem; }
+        .prose li strong { color: #FFFFFF; }
+
+        @media (prefers-reduced-motion: reduce){
+          *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important }
         }
       `}</style>
     </section>
@@ -190,16 +271,32 @@ const RelatedCard = ({ title, desc, to }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     whileHover={{ y: -4 }}
-    transition={{ duration: 0.4, ease }}
-    className="relative rounded-2xl p-6 border border-white/10 bg-white/5 backdrop-blur-xl hover:border-primary/80 transition shadow-[0_0_18px_#00CFFF22]"
+    transition={{ duration: 0.4, ease: [0.22,1,0.36,1] }}
+    className="relative rounded-2xl p-6 transition"
+    style={{
+      border: `1px solid ${NeonBlue}26`,
+      background: `${DeepBlue2}80`,
+      backdropFilter: 'blur(12px)',
+      boxShadow: '0 0 18px rgba(0,199,255,0.13)'
+    }}
   >
     {/* Corner glow */}
-    <span className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(140px_140px_at_20%_0%,rgba(0,207,255,.14),transparent_60%)]" />
-    <h4 className="font-medium text-white text-lg mb-2">{title}</h4>
-    <p className="text-lighttext text-sm mb-4">{desc}</p>
+    <span
+      className="pointer-events-none absolute -inset-px rounded-2xl"
+      style={{
+        opacity: 0,
+        transition: 'opacity .5s',
+        background: 'radial-gradient(140px 140px at 20% 0%, rgba(0,199,255,0.14), transparent 60%)'
+      }}
+    />
+    <h4 className="font-medium text-lg mb-2" style={{ color: '#FFFFFF' }}>{title}</h4>
+    <p className="text-sm mb-4" style={{ color: NeonBlue }}>{desc}</p>
     <Link
       to={to}
-      className="inline-flex items-center text-primary hover:text-glow text-sm font-medium transition"
+      className="inline-flex items-center text-sm font-medium transition"
+      style={{ color: NeonBlue }}
+      onMouseEnter={(e)=>{e.currentTarget.style.color = BurningBlue;}}
+      onMouseLeave={(e)=>{e.currentTarget.style.color = NeonBlue;}}
     >
       Read Article →
     </Link>
